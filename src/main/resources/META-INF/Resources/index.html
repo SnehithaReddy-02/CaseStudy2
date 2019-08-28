@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home Page</title>
+</head>
+<body bgcolor="white">
+<form action="listStageOneQueries" method="get">
+<h2>Welcome to Philips Patient Monitoring</h2>
+<table>
+<c:forEach items="${stageonequeries}" var="p">
+<tr><td>"${p.question}"</td></tr>
+<tr><td><a href=selectquery?id=${p.id}>Select an Option</a></td></tr>
+</c:forEach>
+</table>
+  </form>
+
+</body>
+</html>
