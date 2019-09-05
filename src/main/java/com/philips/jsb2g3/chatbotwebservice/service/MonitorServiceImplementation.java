@@ -60,4 +60,8 @@ public class MonitorServiceImplementation implements MonitorService {
     return dao.getAllScreenTypes();
   }
 
+  @Override
+  public List<Monitor> findByGivenFilters(String brand, String size, String screenType) {
+    return dao.findByGivenBrandGivenSizeGivenScreenType(brand, size, screenType);  }
+
 }

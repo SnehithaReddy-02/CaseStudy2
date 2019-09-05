@@ -9,7 +9,7 @@ import com.philips.jsb2g3.chatbotwebservice.domain.UserDetails;
 public interface UserDetailsService {
 
 
-  int addNewUser(UserDetails toBeAdded);
+  UserDetails addNewUser(UserDetails toBeAdded);
 
   UserDetails findById(int id);
 

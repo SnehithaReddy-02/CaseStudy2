@@ -98,22 +98,18 @@ public class MonitorDAOImplementation implements MonitorDAO {
   }
 
   @Override
-  public List<Monitor> findByBrands(String brand, List<Monitor> monitors) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<Monitor> findByGivenBrandGivenSizeGivenScreenType(String brand, String size, String screenType) {
+
+    final List<Monitor> monitorList=em.createQuery("select m from Monitor m where m.size=:size and m.brand=:brand and m.type=:type")
+        .setParameter("brand", brand)
+        .setParameter("size",size)
+        .setParameter("type", screenType)
+        .getResultList();
+
+
+    return monitorList;
   }
 
-  @Override
-  public List<Monitor> findBySizes(String size, List<Monitor> monitors) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public List<Monitor> findByScreenType(String screenType, List<Monitor> monitors) {
-    // TODO Auto-generated method stub
-    return null;
-  }
 
 
 }

@@ -87,4 +87,14 @@ public class StageOneQueryServiceImplementation implements StageOneQueryService{
 
   }
 
+
+  @Override
+  public void resetSelectors() {
+    final List<StageOneQuery> list=dao.findAll();
+    for(final StageOneQuery query:list)
+    {
+      query.setSelector(false);
+    }
+  }
+
 }

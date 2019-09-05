@@ -12,11 +12,13 @@ public interface StageTwoQueryDAO {
 
   List<StageTwoQuery> findAll(int oneid);
 
+  List<StageTwoQuery> findAllStageTwoQueries();
+
   StageTwoQuery findByID(int id);
 
   int findBySerialNo(int sno,int foreignId);
 
-  int findBySelector(boolean selector);
+  int findBySelector(boolean selector,int foreignID);
 
   void deleteQueriesByID(int id);
 

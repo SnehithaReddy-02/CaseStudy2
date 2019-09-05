@@ -27,4 +27,6 @@ public interface MonitorService {
 
   List<String> getScreenTypes();
 
+  List<Monitor> findByGivenFilters(String brand, String size, String screenType);
+
 }

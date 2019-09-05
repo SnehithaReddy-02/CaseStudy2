@@ -1,0 +1,50 @@
+[
+{
+        "id": 1,
+        "name": "G30E",
+        "brand": "Goldway",
+        "size": "10",
+        "type": "Non-Touch"
+    },
+    {
+        "id": 2,
+        "name": "G40E",
+        "brand": "Goldway",
+        "size": "12",
+        "type": "Non-Touch"
+    },
+    {
+        "id": 3,
+        "name": "CM10",
+        "brand": "Efficia",
+        "size": "10",
+        "type": "Non-Touch"
+    },
+    {
+        "id": 4,
+        "name": "CM12",
+        "brand": "Efficia",
+        "size": "12",
+        "type": "Non-Touch"
+    },
+    {
+        "id": 5,
+        "name": "CM100",
+        "brand": "Efficia",
+        "size": "10",
+        "type": "Touch"
+    },
+    {
+        "id": 6,
+        "name": "CM120",
+        "brand": "Efficia",
+        "size": "12",
+        "type": "Touch"
+    },
+    {
+        "id": 7,
+        "name": "CM150",
+        "brand": "Efficia",
+        "size": "15",
+        "type": "Touch"
+    }]

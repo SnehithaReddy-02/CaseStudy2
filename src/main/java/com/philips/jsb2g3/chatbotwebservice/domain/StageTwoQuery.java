@@ -49,7 +49,9 @@ public class StageTwoQuery {
 
     this.sno = sno;
     this.question = question;
-    this.selector = false;
+    this.selector=false;
+
+
 
   }
 
@@ -85,6 +87,7 @@ public class StageTwoQuery {
   public void setSelector(Boolean selector) {
     this.selector = selector;
   }
+
 
   public StageOneQuery getStageOneQuery() {
     return stageOneQuery;

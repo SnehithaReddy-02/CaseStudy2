@@ -77,12 +77,22 @@ public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
   }
 
   @Override
-  public int findBySelector(boolean selector) {
-    final StageTwoQuery sq= (StageTwoQuery) em.createQuery("select q from StageTwoQuery q where q.selector=:selector")
+  public int findBySelector(boolean selector, int foreignID) {
+    final StageTwoQuery sq= (StageTwoQuery) em.createQuery("select q from StageTwoQuery q where q.selector=:selector and q.stageOneQuery=:stageOneQuery")
         .setParameter("selector", selector)
+        .setParameter("stageOneQuery", service.findQueryById(foreignID))
         .getSingleResult();
     return sq.getId();
   }
+
+
+
+  @Override
+  public List<StageTwoQuery> findAllStageTwoQueries() {
+    return em.createQuery("select q from StageTwoQuery q")
+        .getResultList();
+  }
+
 
 
 

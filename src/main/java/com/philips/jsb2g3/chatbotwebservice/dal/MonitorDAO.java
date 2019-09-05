@@ -24,11 +24,8 @@ public interface MonitorDAO {
 
   List<String> getAllScreenTypes();
 
-  List<Monitor> findByBrands(String brand, List<Monitor> monitors );
+  List<Monitor> findByGivenBrandGivenSizeGivenScreenType(String brand, String size, String screenType );
 
-  List<Monitor> findBySizes(String size, List<Monitor> monitors );
-
-  List<Monitor> findByScreenType(String screenType, List<Monitor> monitors );
 
 
 

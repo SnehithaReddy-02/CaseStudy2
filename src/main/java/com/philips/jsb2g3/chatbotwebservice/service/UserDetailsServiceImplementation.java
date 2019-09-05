@@ -5,9 +5,11 @@ package com.philips.jsb2g3.chatbotwebservice.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import com.philips.jsb2g3.chatbotwebservice.dal.UserDetailsDAO;
 import com.philips.jsb2g3.chatbotwebservice.domain.UserDetails;
 
+@Service
 public class UserDetailsServiceImplementation implements UserDetailsService{
 
   UserDetailsDAO dao;
@@ -19,9 +21,9 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
   }
 
   @Override
-  public int addNewUser(UserDetails toBeAdded) {
-    final UserDetails saved = dao.save(toBeAdded);
-    return saved.getId();
+  public UserDetails addNewUser(UserDetails toBeAdded) {
+    return dao.save(toBeAdded);
+
   }
 
   @Override

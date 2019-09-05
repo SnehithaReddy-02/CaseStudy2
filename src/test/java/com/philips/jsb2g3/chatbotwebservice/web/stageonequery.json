@@ -1,0 +1,20 @@
+[
+{
+	"id": 1,
+	"sno": 1,
+	"question": "Press 1 to select monitors of your choice",
+	"selector": false
+},
+{
+	"id": 2,
+	"sno": 2,
+	"question": "Press 2 to search for monitors",
+	"selector": false
+},
+{
+	"id": 3,
+	"sno": 3,
+	"question": "Press 3, if you have any query",
+	"selector": false
+} 
+]

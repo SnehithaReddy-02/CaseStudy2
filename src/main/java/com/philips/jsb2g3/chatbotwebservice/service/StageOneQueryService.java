@@ -16,6 +16,7 @@ public interface StageOneQueryService {
   public int findQueryBySerialNo(int sno);
   public void deleteQueriesByID(int id);
   public void deleteQueriesBySerialNo(int sno) ;
+  public void resetSelectors() ;
 
 
 }
