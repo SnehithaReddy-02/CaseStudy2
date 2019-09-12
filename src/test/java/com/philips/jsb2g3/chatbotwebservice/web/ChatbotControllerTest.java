@@ -6,50 +6,32 @@ package com.philips.jsb2g3.chatbotwebservice.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doNothing;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.philips.jsb2g3.chatbotwebservice.domain.Monitor;
 import com.philips.jsb2g3.chatbotwebservice.domain.StageOneQuery;
 import com.philips.jsb2g3.chatbotwebservice.domain.StageTwoQuery;
+import com.philips.jsb2g3.chatbotwebservice.domain.UserDetails;
 import com.philips.jsb2g3.chatbotwebservice.service.MonitorService;
 import com.philips.jsb2g3.chatbotwebservice.service.StageOneQueryService;
 import com.philips.jsb2g3.chatbotwebservice.service.StageTwoQueryService;
+import com.philips.jsb2g3.chatbotwebservice.service.UserDetailsService;
 
 public class ChatbotControllerTest {
 
   @Mock
   private StageOneQueryService service;
 
-  private MockMvc mvc;
-
-  @InjectMocks
-  private ChatbotController controller;
-
-
-  @Before
-  public void init(){
-    MockitoAnnotations.initMocks(this);
-    mvc = MockMvcBuilders
-        .standaloneSetup(controller)
-        .build();
-  }
-
 
 
 
   @Test
-  public void getAllStageOneQuestionsWhenNotNull() throws FileNotFoundException {
+  public void getAllStageOneQuestionsWhenNotNull()  {
     final ChatbotController qc = new ChatbotController();
     final StageOneQueryService qr = Mockito.mock(StageOneQueryService.class);
     final List<StageOneQuery> list=setStageOneQueries();
@@ -69,7 +51,7 @@ public class ChatbotControllerTest {
 
 
   @Test
-  public void getAllStageOneQuestionsWhenNull() throws FileNotFoundException {
+  public void getAllStageOneQuestionsWhenNull() {
     final ChatbotController qc = new ChatbotController();
     final StageOneQueryService qr = Mockito.mock(StageOneQueryService.class);
 
@@ -81,7 +63,7 @@ public class ChatbotControllerTest {
 
     final ResponseEntity<List<StageOneQuery>> output = qc.displayStartUpMenu();
     if (output.getStatusCode()==HttpStatus.NOT_FOUND){
-      assertEquals(output.getBody(), null);
+      assertEquals(null,output.getBody());
     }
 
 
@@ -106,12 +88,13 @@ public class ChatbotControllerTest {
     final List<StageTwoQuery> listThree=setStageTwoQueries(3, sone.findQueryById(3));
 
 
+
     Mockito.when(qr.askQuery(2)).thenReturn(listOne);
     final ResponseEntity<List<StageTwoQuery>> output = qc.displayFilterMenu(2);
     if (output.getStatusCode() == HttpStatus.OK){
       assertEquals(output.getBody(), listOne);
     }else {
-      assertEquals(output.getBody(), null);
+      assertEquals(null,output.getBody());
     }
 
 
@@ -121,7 +104,7 @@ public class ChatbotControllerTest {
     if (outputone.getStatusCode() == HttpStatus.OK){
       assertEquals(outputone.getBody(), listTwo);
     }else {
-      assertEquals(outputone.getBody(), null);
+      assertEquals(null,outputone.getBody());
     }
 
 
@@ -130,7 +113,7 @@ public class ChatbotControllerTest {
     if (outputtwo.getStatusCode() == HttpStatus.OK){
       assertEquals(outputtwo.getBody(), listThree);
     }else {
-      assertEquals(outputtwo.getBody(), null);
+      assertEquals(null,outputtwo.getBody());
     }
   }
 
@@ -157,7 +140,7 @@ public class ChatbotControllerTest {
     if (output.getStatusCode() == HttpStatus.OK){
       assertEquals(output.getBody(), listOne);
     }else {
-      assertEquals(output.getBody(), null);    }
+      assertEquals(null,output.getBody());    }
 
 
     final List<StageTwoQuery> listTwo=setStageTwoQueries(-1, stageOneQuery);
@@ -166,7 +149,7 @@ public class ChatbotControllerTest {
     if (outputone.getStatusCode() == HttpStatus.OK){
       assertEquals(outputone.getBody(), listTwo);
     }else {
-      assertEquals(outputone.getBody(), null);
+      assertEquals(null,outputone.getBody());
     }
 
     final List<StageTwoQuery> listThree=setStageTwoQueries(-1, stageOneQuery);
@@ -175,10 +158,11 @@ public class ChatbotControllerTest {
     if (outputtwo.getStatusCode() == HttpStatus.OK){
       assertEquals(outputtwo.getBody(), listThree);
     }else {
-      assertEquals(outputtwo.getBody(), null);
+      assertEquals(null,outputtwo.getBody());
     }
 
   }
+
 
   @Test
   public void displayFilterMenuForQuestionSetEqualsNull()
@@ -196,7 +180,7 @@ public class ChatbotControllerTest {
     if (output.getStatusCode() == HttpStatus.OK){
       assertEquals(output.getBody(), listOne);
     }else {
-      assertEquals(output.getBody(), null);
+      assertEquals(null,output.getBody());
     }
 
   }
@@ -233,14 +217,19 @@ public class ChatbotControllerTest {
 
     final ResponseEntity<List<String>> output = qc.inputFilterResponses(2,"G30E");
     if (output.getStatusCode() == HttpStatus.OK){
-      assertEquals(output.getBody().size(), 1);
+      assertEquals(1,output.getBody().size());
     }
 
 
 
     final ResponseEntity<List<String>> outputone = qc.inputFilterResponses(2,"xxx");
-    if (outputone.getStatusCode() == HttpStatus.NOT_FOUND){
-      assertEquals(outputone.getBody(), null);
+    if (outputone.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,outputone.getBody());
+    }
+
+    final ResponseEntity<List<String>> outputon = qc.inputFilterResponses(12,"1");
+    if (outputon.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,outputon.getBody());
     }
 
   }
@@ -319,9 +308,10 @@ public class ChatbotControllerTest {
 
     final ResponseEntity<List<String>> outputtt = qc.inputFilterResponses(111,"111");
     if (outputtt.getStatusCode() == HttpStatus.BAD_REQUEST){
-      assertEquals(outputtt.getBody(), null);
+      assertEquals(null,outputtt.getBody());
     }
   }
+
 
   @Test
   public void input_Three_Responses_And_Return_FilteredMenu_If_Response_IsValid_Else_Return_Null()
@@ -352,6 +342,11 @@ public class ChatbotControllerTest {
     brandList.add("Efficia");
 
 
+    final List<String> sizeList=new ArrayList<>();
+    sizeList.add("10");
+    sizeList.add("12");
+    sizeList.add("15");
+
     final List<String> tList=new ArrayList<>();
     tList.add("Press 1 for Non-Touch screen monitors");
     tList.add("Press 2 for Touch screen monitors");
@@ -376,7 +371,326 @@ public class ChatbotControllerTest {
     if (output.getStatusCode() == HttpStatus.OK){
       assertEquals(output.getBody().size(), tList.size());
     }
+    final List<Integer> listone=new ArrayList<>();
+    listone.add(2);
+    Mockito.when(sone.findQueryBySerialNo(1)).thenReturn(1);
+    Mockito.when(mService.getScreenTypes()).thenReturn(tyList);
+    Mockito.when(mService.getSizes()).thenReturn(sizeList);
+    doNothing().when(qr).setQuerySelector(listone,1);
+    Mockito.when(qr.findQueryBySelector(true, 1)).thenReturn(3);
+    Mockito.when(qr.getQuerySerialNoByID(3)).thenReturn(2);
 
+
+    final ResponseEntity<List<String>> outputone = qc.inputThreeFilterResponses(1, "2", 1);
+    if (outputone.getStatusCode() == HttpStatus.OK){
+      assertEquals(3,outputone.getBody().size());
+    }
+
+    final List<Integer> listtwo=new ArrayList<>();
+    listtwo.add(3);
+    Mockito.when(sone.findQueryBySerialNo(1)).thenReturn(1);
+    Mockito.when(mService.getSizes()).thenReturn(sizeList);
+    Mockito.when(mService.getBrands()).thenReturn(brandList);
+    doNothing().when(qr).setQuerySelector(listtwo,1);
+    Mockito.when(qr.findQueryBySelector(true, 1)).thenReturn(4);
+    Mockito.when(qr.getQuerySerialNoByID(4)).thenReturn(3);
+
+
+    final ResponseEntity<List<String>> outputon = qc.inputThreeFilterResponses(1, "3", 1);
+    if (outputon.getStatusCode() == HttpStatus.OK){
+      assertEquals(2,outputon.getBody().size());
+    }
+
+
+    final ResponseEntity<List<String>> outputn = qc.inputThreeFilterResponses(13, "3", 1);
+    if (outputn.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,outputn.getBody());
+    }
+
+    final ResponseEntity<List<String>> outpn = qc.inputThreeFilterResponses(1, "13", 1);
+    if (outpn.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,outpn.getBody());
+
+
+    }
+
+
+    final List<Monitor> monitors=setMonitors();
+
+    Mockito.when(mService.findByName("G30E")).thenReturn(monitors.get(0));
+    final ResponseEntity<List<String>> outn = qc.inputThreeFilterResponses(2, "G30E", 1);
+    if (outn.getStatusCode() == HttpStatus.OK){
+      assertEquals(1,outn.getBody().size());
+
+    }
+
+    final ResponseEntity<List<String>> out = qc.inputThreeFilterResponses(2, "G30E", 2);
+    if (out.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,out.getBody());
+
+    }
+
+    final ResponseEntity<List<String>> o = qc.inputThreeFilterResponses(2, "G50E", 1);
+    if (o.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,o.getBody());
+
+    }
+
+
+    final List<Integer> listt=new ArrayList<>();
+    listt.add(4);
+    Mockito.when(sone.findQueryBySerialNo(1)).thenReturn(1);
+    Mockito.when(qr.findQueryBySelector(true, 1)).thenReturn(5);
+    Mockito.when(qr.getQuerySerialNoByID(5)).thenReturn(4);
+
+
+
+    Mockito.when(mService.findAll()).thenReturn(monitors);
+    final ResponseEntity<List<String>> ot = qc.inputThreeFilterResponses(1, "4", 1);
+    if (ot.getStatusCode() == HttpStatus.OK){
+      assertEquals(1,ot.getBody().size());
+
+    }
+
+
+    final ResponseEntity<List<String>> ott = qc.inputThreeFilterResponses(1, "4", 188);
+    if (ott.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,ott.getBody());
+
+    }
+
+  }
+
+  @Test
+  public void InputsUserDetailsIfValidSavesInDBElseReturnsBadRequest() {
+
+
+    final ChatbotController qc = new ChatbotController();
+    final StageTwoQueryService qr = Mockito.mock(StageTwoQueryService.class);
+    final StageOneQueryService sone = Mockito.mock(StageOneQueryService.class);
+    final MonitorService mService=Mockito.mock(MonitorService.class);
+    final UserDetailsService uService=Mockito.mock(UserDetailsService.class);
+
+    qc.setServicetwo(qr);
+    qc.setService(sone);
+    qc.setMonitorService(mService);
+    qc.setUserService(uService);
+    Mockito.when(sone.askQuery()).thenReturn(setStageOneQueries());
+    final List<StageTwoQuery> listOne=setStageTwoQueries(2, sone.findQueryById(2));
+    final List<StageTwoQuery> listTwo=setStageTwoQueries(1, sone.findQueryById(1));
+    final List<StageTwoQuery> listThree=setStageTwoQueries(3, sone.findQueryById(3));
+    Mockito.when(qr.askQuery(2)).thenReturn(listOne);
+    Mockito.when(qr.askQuery(1)).thenReturn(listTwo);
+    Mockito.when(qr.askQuery(3)).thenReturn(listThree);
+
+    final List<UserDetails> uDetails=setUserDetails();
+    Mockito.when(uService.addNewUser(uDetails.get(0))).thenReturn(uDetails.get(0));
+
+    final ResponseEntity<String> ott = qc.getUserDetails(uDetails.get(0));
+    if (ott.getStatusCode() == HttpStatus.CREATED){
+      assertEquals(true,ott.getBody().contains("Thank you"));
+
+    }
+
+
+    Mockito.when(uService.addNewUser(uDetails.get(1))).thenReturn(uDetails.get(1));
+
+    final ResponseEntity<String> ot = qc.getUserDetails(uDetails.get(1));
+    if (ot.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,ot.getBody());
+
+    }
+
+
+
+  }
+
+
+  @Test
+  public void input_Four_Responses_If_Valid_Return_Filtered_Menu_Else_Null()
+  {
+
+    final ChatbotController qc = new ChatbotController();
+    final StageTwoQueryService qr = Mockito.mock(StageTwoQueryService.class);
+    final StageOneQueryService sone = Mockito.mock(StageOneQueryService.class);
+    final MonitorService mService=Mockito.mock(MonitorService.class);
+    final UserDetailsService uService=Mockito.mock(UserDetailsService.class);
+
+    qc.setServicetwo(qr);
+    qc.setService(sone);
+    qc.setMonitorService(mService);
+    qc.setUserService(uService);
+    Mockito.when(sone.askQuery()).thenReturn(setStageOneQueries());
+    final List<StageTwoQuery> listOne=setStageTwoQueries(2, sone.findQueryById(2));
+    final List<StageTwoQuery> listTwo=setStageTwoQueries(1, sone.findQueryById(1));
+    final List<StageTwoQuery> listThree=setStageTwoQueries(3, sone.findQueryById(3));
+    Mockito.when(qr.askQuery(2)).thenReturn(listOne);
+    Mockito.when(qr.askQuery(1)).thenReturn(listTwo);
+    Mockito.when(qr.askQuery(3)).thenReturn(listThree);
+
+
+    final List<String> typeList=new ArrayList<>();
+    typeList.add("Non-Touch");
+    typeList.add("Touch");
+
+    final List<String> brandList=new ArrayList<>();
+    brandList.add("Goldway");
+    brandList.add("Efficia");
+
+
+    final List<String> sizeList=new ArrayList<>();
+    sizeList.add("10");
+    sizeList.add("12");
+    sizeList.add("15");
+
+
+    final List<Integer> list=new ArrayList<>();
+    list.add(1);
+    list.add(2);
+    list.add(4);
+
+
+    Mockito.when(sone.findQueryBySerialNo(1)).thenReturn(1);
+    Mockito.when(mService.getBrands()).thenReturn(brandList);
+    Mockito.when(mService.getScreenTypes()).thenReturn(typeList);
+    Mockito.when(mService.getSizes()).thenReturn(sizeList);
+    doNothing().when(qr).setQuerySelector(list,1);
+    Mockito.when(qr.findQueryBySelector(false, 1)).thenReturn(4);
+    Mockito.when(qr.getQuerySerialNoByID(4)).thenReturn(3);
+
+
+    final ResponseEntity<List<String>> ot = qc.inputTillFourResponses(1,"1",1,1);
+    if (ot.getStatusCode() == HttpStatus.OK){
+      assertEquals(3,ot.getBody().size());
+
+    }
+    final ResponseEntity<List<String>> op = qc.inputTillFourResponses(1,"1",1,180);
+    if (op.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,op.getBody());
+    }
+
+
+    final List<Integer> listone=new ArrayList<>();
+    listone.add(3);
+    listone.add(2);
+    listone.add(4);
+
+    doNothing().when(qr).setQuerySelector(listone,1);
+    Mockito.when(qr.findQueryBySelector(false, 1)).thenReturn(2);
+    Mockito.when(qr.getQuerySerialNoByID(2)).thenReturn(1);
+
+
+    final ResponseEntity<List<String>> otn = qc.inputTillFourResponses(1,"2",1,1);
+    if (otn.getStatusCode() == HttpStatus.OK){
+      assertEquals(2,otn.getBody().size());
+    }
+
+    final ResponseEntity<List<String>> l = qc.inputTillFourResponses(1,"2",1,180);
+    if (l.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,l.getBody());
+    }
+
+    final List<Integer> listtwo=new ArrayList<>();
+    listtwo.add(3);
+    listtwo.add(1);
+    listtwo.add(4);
+
+    doNothing().when(qr).setQuerySelector(listtwo,1);
+    Mockito.when(qr.findQueryBySelector(false, 1)).thenReturn(3);
+    Mockito.when(qr.getQuerySerialNoByID(3)).thenReturn(2);
+
+
+    final ResponseEntity<List<String>> on = qc.inputTillFourResponses(1,"3",1,1);
+    if (on.getStatusCode() == HttpStatus.OK){
+      assertEquals(2,on.getBody().size());
+    }
+
+    final ResponseEntity<List<String>> o = qc.inputTillFourResponses(1,"3ik",1,1);
+    if (o.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,o.getBody());
+    }
+
+    final ResponseEntity<List<String>> lop = qc.inputTillFourResponses(1,"1",1,180);
+    if (lop.getStatusCode() == HttpStatus.BAD_REQUEST){
+      assertEquals(null,lop.getBody());
+    }
+
+
+  }
+
+  @Test
+  public void  enableStackOfChoicesTest() {
+
+
+  }
+
+
+
+  @Test
+  public void input_Five_Responses_If_Valid_Return_Filtered_Menu_Else_Null()
+  {
+
+
+    final ChatbotController qc = new ChatbotController();
+    final StageTwoQueryService qr = Mockito.mock(StageTwoQueryService.class);
+    final StageOneQueryService sone = Mockito.mock(StageOneQueryService.class);
+    final MonitorService mService=Mockito.mock(MonitorService.class);
+    final UserDetailsService uService=Mockito.mock(UserDetailsService.class);
+
+    qc.setServicetwo(qr);
+    qc.setService(sone);
+    qc.setMonitorService(mService);
+    qc.setUserService(uService);
+    Mockito.when(sone.askQuery()).thenReturn(setStageOneQueries());
+    final List<StageTwoQuery> listOne=setStageTwoQueries(2, sone.findQueryById(2));
+    final List<StageTwoQuery> listTwo=setStageTwoQueries(1, sone.findQueryById(1));
+    final List<StageTwoQuery> listThree=setStageTwoQueries(3, sone.findQueryById(3));
+    Mockito.when(qr.askQuery(2)).thenReturn(listOne);
+    Mockito.when(qr.askQuery(1)).thenReturn(listTwo);
+    Mockito.when(qr.askQuery(3)).thenReturn(listThree);
+
+
+    final List<String> typeList=new ArrayList<>();
+    typeList.add("Non-Touch");
+    typeList.add("Touch");
+
+    final List<String> brandList=new ArrayList<>();
+    brandList.add("Goldway");
+    brandList.add("Efficia");
+
+
+    final List<String> sizeList=new ArrayList<>();
+    sizeList.add("10");
+    sizeList.add("12");
+    sizeList.add("15");
+
+
+    final List<Integer> list=new ArrayList<>();
+    list.add(1);
+    list.add(2);
+    list.add(4);
+
+
+
+    final List<Monitor> mList=setMonitors();
+    final List<Monitor> moList=setMonitors();
+    moList.add(mList.get(0));
+
+    Mockito.when(sone.findQueryBySerialNo(1)).thenReturn(1);
+    Mockito.when(mService.getBrands()).thenReturn(brandList);
+    Mockito.when(mService.getScreenTypes()).thenReturn(typeList);
+    Mockito.when(mService.getSizes()).thenReturn(sizeList);
+    doNothing().when(qr).setQuerySelector(list,1);
+    Mockito.when(qr.findQueryBySelector(false, 1)).thenReturn(4);
+    Mockito.when(qr.getQuerySerialNoByID(4)).thenReturn(3);
+    Mockito.when(mService.findByGivenFilters("Goldway", "10", "Non-Touch")).thenReturn(moList);
+
+    final ResponseEntity<List<Monitor>> on = qc.inputFiveResponses(1, "1", 1, 1, 1);
+    if (on.getStatusCode() == HttpStatus.OK){
+      assertEquals(1,on.getBody().size());
+    }else {
+      assertEquals(null,on.getBody());
+    }
 
   }
 
@@ -493,6 +807,23 @@ public class ChatbotControllerTest {
     monitors.add(monitor6);
 
     return monitors;
+
+  }
+
+
+  private List<UserDetails> setUserDetails()
+  {
+
+    final List<UserDetails> list=new ArrayList<>();
+
+    final UserDetails uDetails=new UserDetails("bunnyreddy","9302882543", "reddy@gmail.com", "Karimnagar");
+    final UserDetails uDetails1=new UserDetails("bunnyreddy","93028823", "reddygmailcom", "Karimnagar");
+
+    list.add(uDetails);
+    list.add(uDetails1);
+
+
+    return list;
 
   }
 

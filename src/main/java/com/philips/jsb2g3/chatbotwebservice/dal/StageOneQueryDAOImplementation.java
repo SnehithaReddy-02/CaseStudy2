@@ -12,6 +12,7 @@ import com.philips.jsb2g3.chatbotwebservice.domain.StageOneQuery;
 
 @Transactional
 @Repository
+@SuppressWarnings(value = {"unchecked"})
 public class StageOneQueryDAOImplementation implements StageOneQueryDAO {
 
   @PersistenceContext
@@ -30,6 +31,7 @@ public class StageOneQueryDAOImplementation implements StageOneQueryDAO {
     .setParameter("id", id)
     .executeUpdate();
   }
+
 
 
   @Override
@@ -64,6 +66,7 @@ public class StageOneQueryDAOImplementation implements StageOneQueryDAO {
     .executeUpdate();
   }
 
+
   @Override
   public int findBySelector(boolean selector) {
     final StageOneQuery sq= (StageOneQuery) em.createQuery("select q from StageOneQuery q where q.selector=:selector")
@@ -71,6 +74,18 @@ public class StageOneQueryDAOImplementation implements StageOneQueryDAO {
         .getSingleResult();
     return sq.getId();
   }
+
+  @Override
+  public void setSelector(int id, boolean selector) {
+    final StageOneQuery sq= (StageOneQuery) em.createQuery("select q from StageOneQuery q where q.id=:id")
+        .setParameter("id", id)
+        .getSingleResult();
+
+    sq.setSelector(selector);
+    em.persist(sq);
+    em.close();
+  }
+
 
 
 

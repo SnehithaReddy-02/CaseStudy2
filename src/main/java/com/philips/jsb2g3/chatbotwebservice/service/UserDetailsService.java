@@ -13,10 +13,8 @@ public interface UserDetailsService {
 
   UserDetails findById(int id);
 
-  UserDetails findByName(String name);
-
   List<UserDetails> findAll();
 
-  void deleteById(int id);
+
 
 }

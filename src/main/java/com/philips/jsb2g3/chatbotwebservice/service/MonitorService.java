@@ -19,8 +19,6 @@ public interface MonitorService {
 
   List<Monitor> findAll();
 
-  void deleteById(int id);
-
   List<String> getBrands();
 
   List<String> getSizes();

@@ -3,14 +3,13 @@
  */
 package com.philips.jsb2g3.chatbotwebservice;
 
-import java.io.IOException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ChatbotwebserviceApplication {
 
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args)  {
 
 
     SpringApplication.run(ChatbotwebserviceApplication.class, args);

@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 import com.philips.jsb2g3.chatbotwebservice.dal.StageOneQueryDAO;
 import com.philips.jsb2g3.chatbotwebservice.domain.StageOneQuery;
 
+
+
 @Service
 public class StageOneQueryServiceImplementation implements StageOneQueryService{
 
   StageOneQueryDAO dao;
+
+
 
   @Autowired
   public void setDao(StageOneQueryDAO dao) {
@@ -21,8 +25,8 @@ public class StageOneQueryServiceImplementation implements StageOneQueryService{
 
 
   @Override
-  public void addNewQuery(StageOneQuery q) {
-    dao.save(q);
+  public StageOneQuery addNewQuery(StageOneQuery q) {
+    return dao.save(q);
   }
 
 
@@ -52,18 +56,6 @@ public class StageOneQueryServiceImplementation implements StageOneQueryService{
   }
 
 
-  @Override
-  public void deleteQueriesByID(int id) {
-    dao.deleteQueriesByID(id);
-
-  }
-
-
-  @Override
-  public void deleteQueriesBySerialNo(int sno) {
-    dao.deleteQueriesBySerialNo(sno);
-
-  }
 
 
   @Override
@@ -74,12 +66,13 @@ public class StageOneQueryServiceImplementation implements StageOneQueryService{
       if(i==serialNo)
       {
         final int id=dao.findBySerialNo(serialNo);
-        final StageOneQuery query=dao.findByID(id);
-        query.setSelector(true);
+        dao.setSelector(id, true);
+
+
       }else {
         final int id=dao.findBySerialNo(i);
-        final StageOneQuery query=dao.findByID(id);
-        query.setSelector(false);
+        dao.setSelector(id, false);
+
 
       }
     }

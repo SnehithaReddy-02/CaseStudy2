@@ -13,8 +13,7 @@ public interface StageTwoQueryService {
   public void addNewQuery(StageTwoQuery q,int stageoneID);
   public StageTwoQuery findQueryById(int id);
   public int findQueryBySelector(boolean selector,int foreignID);
-  public void deleteQueriesByID(int id);
-  public void deleteQueriesBySerialNo(int sno) ;
+
   public void setQuerySelector(List<Integer> serialNo,int foreignId);
   public void resetSelectors();
   public int getQuerySerialNoByID(int id);

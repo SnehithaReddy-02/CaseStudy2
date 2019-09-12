@@ -13,10 +13,14 @@ import com.philips.jsb2g3.chatbotwebservice.domain.Monitor;
 
 @Transactional
 @Repository
+@SuppressWarnings(value = {"unchecked"})
 public class MonitorDAOImplementation implements MonitorDAO {
 
   @PersistenceContext
   EntityManager em;
+
+  public static final String STRING="select m from Monitor m";
+
 
   @Override
   public Monitor save(Monitor m) {
@@ -37,9 +41,10 @@ public class MonitorDAOImplementation implements MonitorDAO {
 
   }
 
+
   @Override
   public List<Monitor> findAll() {
-    return em.createQuery("select m from Monitor m")
+    return em.createQuery(STRING)
         .getResultList();
   }
 
@@ -53,7 +58,7 @@ public class MonitorDAOImplementation implements MonitorDAO {
   @Override
   public List<String> getAllBrands() {
     final List<String> brandsList=new ArrayList<>();
-    final List<Monitor> monitors=em.createQuery("select m from Monitor m")
+    final List<Monitor> monitors=em.createQuery(STRING)
         .getResultList();
 
     for(final Monitor monitor:monitors)
@@ -69,7 +74,7 @@ public class MonitorDAOImplementation implements MonitorDAO {
   public List<String> getAllSizes() {
 
     final List<String> screenSizesList=new ArrayList<>();
-    final List<Monitor> monitors=em.createQuery("select m from Monitor m")
+    final List<Monitor> monitors=em.createQuery(STRING)
         .getResultList();
 
     for(final Monitor monitor:monitors)
@@ -85,7 +90,7 @@ public class MonitorDAOImplementation implements MonitorDAO {
   @Override
   public List<String> getAllScreenTypes() {
     final List<String> screenTypesList=new ArrayList<>();
-    final List<Monitor> monitors=em.createQuery("select m from Monitor m")
+    final List<Monitor> monitors=em.createQuery(STRING)
         .getResultList();
 
     for(final Monitor monitor:monitors)
@@ -100,14 +105,13 @@ public class MonitorDAOImplementation implements MonitorDAO {
   @Override
   public List<Monitor> findByGivenBrandGivenSizeGivenScreenType(String brand, String size, String screenType) {
 
-    final List<Monitor> monitorList=em.createQuery("select m from Monitor m where m.size=:size and m.brand=:brand and m.type=:type")
+    return em.createQuery("select m from Monitor m where m.size=:size and m.brand=:brand and m.type=:type")
         .setParameter("brand", brand)
         .setParameter("size",size)
         .setParameter("type", screenType)
         .getResultList();
 
 
-    return monitorList;
   }
 
 

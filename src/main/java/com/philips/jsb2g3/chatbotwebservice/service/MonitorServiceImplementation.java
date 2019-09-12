@@ -40,10 +40,7 @@ public class MonitorServiceImplementation implements MonitorService {
     return dao.findAll();
   }
 
-  @Override
-  public void deleteById(int id) {
-    dao.deleteById(id);
-  }
+
 
   @Override
   public List<String> getBrands() {

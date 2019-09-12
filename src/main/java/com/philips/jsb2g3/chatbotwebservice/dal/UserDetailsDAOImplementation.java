@@ -12,6 +12,7 @@ import com.philips.jsb2g3.chatbotwebservice.domain.UserDetails;
 
 @Transactional
 @Repository
+@SuppressWarnings(value = {"unchecked"})
 public class UserDetailsDAOImplementation implements UserDetailsDAO {
 
   @PersistenceContext

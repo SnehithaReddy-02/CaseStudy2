@@ -23,7 +23,7 @@ public class UserDetails {
   String name;
 
   @Column(name="Contact_No")
-  int contactNo;
+  String contactNo;
 
   @Column(name="Email")
   String email;
@@ -35,7 +35,7 @@ public class UserDetails {
 
   }
 
-  public UserDetails(String name, int contactNo, String email, String hospitalAddress) {
+  public UserDetails(String name, String contactNo, String email, String hospitalAddress) {
     super();
     this.name = name;
     this.contactNo = contactNo;
@@ -59,11 +59,11 @@ public class UserDetails {
     this.name = name;
   }
 
-  public int getContactNo() {
+  public String getContactNo() {
     return contactNo;
   }
 
-  public void setContactNo(int contactNo) {
+  public void setContactNo(String contactNo) {
     this.contactNo = contactNo;
   }
 

@@ -31,18 +31,12 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
     return dao.findById(id);
   }
 
-  @Override
-  public UserDetails findByName(String name) {
-    return dao.findByName(name);
-  }
+
 
   @Override
   public List<UserDetails> findAll() {
     return dao.findAll();
   }
 
-  @Override
-  public void deleteById(int id) {
-    dao.deleteById(id);
-  }
+
 }

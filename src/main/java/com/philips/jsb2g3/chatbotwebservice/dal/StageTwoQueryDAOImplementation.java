@@ -15,6 +15,7 @@ import com.philips.jsb2g3.chatbotwebservice.service.StageOneQueryService;
 
 @Transactional
 @Repository
+@SuppressWarnings(value = {"unchecked"})
 public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
 
   @PersistenceContext
@@ -22,6 +23,10 @@ public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
 
   @Autowired
   StageOneQueryService service;
+
+  static final  String QUERY="stageOneQuery";
+
+
 
   @Override
   public StageTwoQuery save(StageTwoQuery q, int oneId) {
@@ -55,15 +60,16 @@ public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
   public List<StageTwoQuery> findAll(int oneid) {
     final StageOneQuery query = em.find(StageOneQuery.class, oneid);
     return em.createQuery("select q from StageTwoQuery q where q.stageOneQuery=:stageOneQuery")
-        .setParameter("stageOneQuery", query)
+        .setParameter( QUERY, query)
         .getResultList();
   }
+
 
   @Override
   public int findBySerialNo(int sno,int foreignId) {
     final StageTwoQuery sq= (StageTwoQuery) em.createQuery("select q from StageTwoQuery q where q.sno=:sno and q.stageOneQuery=:stageOneQuery")
         .setParameter("sno", sno)
-        .setParameter("stageOneQuery", service.findQueryById(foreignId))
+        .setParameter(QUERY, service.findQueryById(foreignId))
         .getSingleResult();
     return sq.getId();
   }
@@ -80,10 +86,11 @@ public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
   public int findBySelector(boolean selector, int foreignID) {
     final StageTwoQuery sq= (StageTwoQuery) em.createQuery("select q from StageTwoQuery q where q.selector=:selector and q.stageOneQuery=:stageOneQuery")
         .setParameter("selector", selector)
-        .setParameter("stageOneQuery", service.findQueryById(foreignID))
+        .setParameter(QUERY, service.findQueryById(foreignID))
         .getSingleResult();
     return sq.getId();
   }
+
 
 
 
@@ -92,6 +99,7 @@ public class StageTwoQueryDAOImplementation implements StageTwoQueryDAO {
     return em.createQuery("select q from StageTwoQuery q")
         .getResultList();
   }
+
 
 
 

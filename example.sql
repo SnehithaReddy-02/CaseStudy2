@@ -44,7 +44,7 @@ CREATE TABLE `stageonequerytable` (
 
 LOCK TABLES `stageonequerytable` WRITE;
 /*!40000 ALTER TABLE `stageonequerytable` DISABLE KEYS */;
-INSERT INTO `stageonequerytable` VALUES (1,'Press 1 to select monitors of your choice',1,0),(2,'Press 2 to search for monitors',2,1),(3,'Press 3, if you have any query',3,0),(4,'Press 4, to display all monitors',4,0);
+INSERT INTO `stageonequerytable` VALUES (1,'Press 1 to select monitors of your choice',1,0),(2,'Press 2 to search for monitors',2,1),(3,'Press 3, if you have any query',3,0);
 /*!40000 ALTER TABLE `stageonequerytable` ENABLE KEYS */;
 UNLOCK TABLES;
 

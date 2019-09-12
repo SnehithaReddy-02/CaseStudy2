@@ -22,5 +22,6 @@ public interface StageOneQueryDAO {
 
   void deleteQueriesBySerialNo(int sno);
 
+  void setSelector(int id,boolean selector);
 
 }

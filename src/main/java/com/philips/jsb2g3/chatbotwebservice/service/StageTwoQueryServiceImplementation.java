@@ -19,11 +19,9 @@ import com.philips.jsb2g3.chatbotwebservice.domain.StageTwoQuery;
 @Repository
 public class StageTwoQueryServiceImplementation implements StageTwoQueryService{
 
-  @Autowired
+
   StageTwoQueryDAO dao;
 
-
-  @Autowired
   StageOneQueryDAO daoone;
 
   @PersistenceContext
@@ -31,12 +29,23 @@ public class StageTwoQueryServiceImplementation implements StageTwoQueryService{
 
 
 
+  @Autowired
+  public void setDao(StageTwoQueryDAO dao) {
+    this.dao = dao;
+  }
+
+  @Autowired
+  public void setDaoone(StageOneQueryDAO daoone) {
+    this.daoone = daoone;
+  }
+
   @Override
   public List<StageTwoQuery> askQuery(int serialno) {
 
     return dao.findAll(daoone.findBySerialNo(serialno));
 
   }
+
 
   @Override
   public void addNewQuery(StageTwoQuery q, int stageoneID) {
@@ -56,16 +65,7 @@ public class StageTwoQueryServiceImplementation implements StageTwoQueryService{
   }
 
 
-  @Override
-  public void deleteQueriesByID(int id) {
-    dao.deleteQueriesByID(id);
-  }
 
-  @Override
-  public void deleteQueriesBySerialNo(int sno) {
-    dao.deleteBySerialNo(sno);
-
-  }
 
 
 
@@ -89,9 +89,11 @@ public class StageTwoQueryServiceImplementation implements StageTwoQueryService{
       q.setSelector(true);
       em.persist(q);
       em.close();
+
     }
 
   }
+
 
   @Override
   public int getQuerySerialNoByID(int id) {

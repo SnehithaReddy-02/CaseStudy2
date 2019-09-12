@@ -9,13 +9,12 @@ import com.philips.jsb2g3.chatbotwebservice.domain.StageOneQuery;
 public interface StageOneQueryService {
 
   public List<StageOneQuery> askQuery();
-  public void addNewQuery(StageOneQuery q);
+  public StageOneQuery addNewQuery(StageOneQuery q);
   public StageOneQuery findQueryById(int id);
   public void setSelector(int serialNo,int queryListSize);
   public int findQueryBySelector(boolean selector);
   public int findQueryBySerialNo(int sno);
-  public void deleteQueriesByID(int id);
-  public void deleteQueriesBySerialNo(int sno) ;
+
   public void resetSelectors() ;
 
 
