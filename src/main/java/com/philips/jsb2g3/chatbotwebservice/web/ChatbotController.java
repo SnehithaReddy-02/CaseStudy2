@@ -480,7 +480,7 @@ public class ChatbotController {
 
 
 
-  private List<Monitor> enableStackOfChoices( int opt, int option3, int option4, int option5) {
+  public List<Monitor> enableStackOfChoices( int opt, int option3, int option4, int option5) {
 
     List<Monitor> monitors=new ArrayList<>();
     final String string="The selected features are:";
